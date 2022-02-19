@@ -1,0 +1,6 @@
+goos: darwin
+goarch: arm64
+pkg: stefanitsky.me/gachinator
+BenchmarkGachinate-8   	     751	   1430418 ns/op	    5641 B/op	       1 allocs/op
+PASS
+ok  	stefanitsky.me/gachinator	1.368s
