@@ -18,7 +18,7 @@ import "stefanitsky.me/gachinator"
 func main() {
     // ...
     input := "some input message text"
-    result := gachinator.Gachinate([]byte(input))
+    result := gachinator.GachinateEN([]byte(input))
     fmt.Println(string(result))
     // ...
 }
@@ -26,9 +26,9 @@ func main() {
 
 ## Examples
 
-### EN (no yet implemented)
+### EN
 
-* `message` -> `mASSage`
+* `manufacturable` -> `manuFUCKturable`
 * `cool` -> `c♂♂l`
 
 ### RU
@@ -38,5 +38,4 @@ func main() {
 
 ## TODO
 
-* Multilingual regexp (EN/RU etc.)
 * CLI auto ci build

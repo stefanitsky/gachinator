@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"os"
 
@@ -14,11 +15,20 @@ var (
 )
 
 func main() {
+	lang := flag.String("lang", "ru", "select language config")
+	flag.Parse()
+
+	lc, err := gachinator.FindLangConfig(*lang)
+	if err != nil {
+		fmt.Fprint(os.Stdout, err)
+		os.Exit(1)
+	}
+
 	sc := bufio.NewScanner(os.Stdin)
 
 	for sc.Scan() {
 		currentLine = sc.Bytes()
-		gachinatedLine = gachinator.Gachinate(currentLine)
+		gachinatedLine = gachinator.Gachinate(currentLine, *lc)
 		fmt.Fprint(os.Stdout, string(gachinatedLine))
 	}
 
