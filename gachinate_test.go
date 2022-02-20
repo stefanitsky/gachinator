@@ -1,4 +1,4 @@
-package gachinate
+package gachinator
 
 import (
 	"bufio"
@@ -65,6 +65,14 @@ func TestGachinate(t *testing.T) {
 		{
 			input:          "глубокая кроличья нора",
 			expectedOutput: "DEEP кр♂личья н♂ра",
+		},
+		{
+			input:          "доллары",
+			expectedOutput: "BUCKS",
+		},
+		{
+			input:          "долларов",
+			expectedOutput: "BUCKS",
 		},
 	}
 

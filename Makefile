@@ -12,3 +12,6 @@ coverprofile:
 
 show-html-coverprofile:
 	@go tool cover -html=$(PROF_FILE_NAME)
+
+benchstat:
+	@benchstat benchmarks/*

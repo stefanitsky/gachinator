@@ -1,4 +1,5 @@
-package gachinate
+// Package gachinator provides utils to gachinate input text.
+package gachinator
 
 import (
 	"regexp"
@@ -12,22 +13,28 @@ type match struct {
 }
 
 var (
-	re        = regexp.MustCompile(`(эс)|(о)|(к[ао]м)|([фФ]ак)|(т[её]мный)|(гей)|(глубокий|глубокое|глубоко|глубокая)`)
+	re        = regexp.MustCompile(`([эЭ]с)|(о)|([кК][ао]м)|([фФ]ак)|(т[её]мн(ый|ое|ая|о|ые|ых))|(гей)|(глубок(ий|ое|ая|о|и|ие|ого))|(доллар(ов|ы))`)
 	replacers = map[int][]byte{
 		0: []byte("ASS"),
 		1: []byte("♂"),
 		2: []byte("CUM"),
 		3: []byte("FUCK"),
 		4: []byte("DARK"),
-		5: []byte("GAY"),
-		6: []byte("DEEP"),
+		// 5: useless suffixes group
+		6: []byte("GAY"),
+		7: []byte("DEEP"),
+		// 8: useless suffixes group
+		9: []byte("BUCKS"),
 	}
 )
 
 var (
-	offset   int
-	m        match
-	orig     []byte
+	offset int
+	m      match
+	orig   []byte
+)
+
+var (
 	subIndex int
 	start    int
 	end      int
@@ -35,6 +42,7 @@ var (
 	found    bool
 )
 
+// Gachinates your input text and returns gachinated variant.
 func Gachinate(b []byte) []byte {
 	allSubmatchIndexes := re.FindAllSubmatchIndex(b, -1)
 
@@ -51,11 +59,8 @@ func Gachinate(b []byte) []byte {
 	return b
 }
 
+// Finds match by found regex submatch indexes and returns match struct.
 func findMatch(indexes *[]int, b *[]byte) (m match) {
-	if len(*indexes) < 4 {
-		return m
-	}
-
 	subIndex = 0
 
 	for i := 2; i < len(*indexes); i += 2 {
@@ -66,7 +71,7 @@ func findMatch(indexes *[]int, b *[]byte) (m match) {
 				m.start = start
 				m.end = end
 				m.replacer = repl
-				m.found = true
+				m.found = found
 				break
 			}
 		}
