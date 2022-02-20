@@ -12,7 +12,7 @@ TODO: pre-build or how to build
 
 ```go
 // ...
-import "stefanitsky.me/gachinator"
+import "github.com/stefanitsky/gachinator"
 // ...
 
 func main() {

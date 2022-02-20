@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"os"
 
-	"stefanitsky.me/gachinator"
+	"github.com/stefanitsky/gachinator"
 )
 
 var (

@@ -1,3 +1,3 @@
-module stefanitsky.me/gachinator
+module github.com/stefanitsky/gachinator
 
 go 1.17
