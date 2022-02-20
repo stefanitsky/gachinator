@@ -28,13 +28,13 @@ func main() {
 
 ### EN (no yet implemented)
 
-* message -> mASSage
-* cool -> c♂♂l
+* `message` -> `mASSage`
+* `cool` -> `c♂♂l`
 
 ### RU
 
-* фактор -> FUCKт♂р
-* тёмный -> DARK
+* `фактор` -> `FUCKт♂р`
+* `тёмный` -> `DARK`
 
 ## TODO
 
