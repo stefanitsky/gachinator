@@ -7,6 +7,10 @@ bench:
 test:
 	@go test -v -cover -race
 
+lint:
+	@go vet
+	@golint
+
 coverprofile:
 	@go test -coverprofile=$(PROF_FILE_NAME)
 

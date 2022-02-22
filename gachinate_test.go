@@ -16,7 +16,7 @@ type GachinateTestCase struct {
 type GachinateSimpleTestCase struct {
 	input          string
 	expectedOutput string
-	langConfig     langConfig
+	langConfig     LangConfig
 }
 
 func TestGachinateRu(t *testing.T) {
