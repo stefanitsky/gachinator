@@ -1,12 +1,25 @@
 # Gachinate
 
+![workflow](https://github.com/stefanitsky/gachinator/actions/workflows/test.yml/badge.svg)
+[![Go Report Card](https://goreportcard.com/badge/github.com/stefanitsky/gachinator)](https://goreportcard.com/report/github.com/stefanitsky/gachinator)
+
 Package gachinator provides utils to gachinate input text.
 
 ## Usage
 
 ### CLI
 
-TODO: pre-build or how to build
+[Pre-built binaries](https://github.com/stefanitsky/gachinator/releases/)
+
+#### CLI Usage
+
+```sh
+$ cat testdata/benchmark.txt | gachinator --lang=ru
+П♂вседневная практика п♂казывает, чт♂ дальнейшее развитие...
+
+$ echo 'Hello' | gachinator --lang=en
+Hell♂
+```
 
 ### As package
 
@@ -36,6 +49,4 @@ func main() {
 * `фактор` -> `FUCKт♂р`
 * `тёмный` -> `DARK`
 
-## TODO
-
-* CLI auto ci build
+[More examples in tests](https://github.com/stefanitsky/gachinator/blob/master/gachinate_test.go)
