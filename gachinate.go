@@ -20,18 +20,39 @@ type langConfig struct {
 
 var (
 	RussianConfig = langConfig{
-		re: regexp.MustCompile(`([эЭ]с)|(о)|([кК][ао]м)|([фФ]ак)|(т[её]мн(ый|ое|ая|о|ые|ых))|(гей)|(глубок(ий|ое|ая|о|и|ие|ого))|(доллар(ов|ы))`),
+		re: regexp.MustCompile(`` +
+			`([эЭ]с)` +
+			`|(онал)` +
+			`|([кК][ао]м)` +
+			`|([фФ]ак)` +
+			`|([тТ][её]мн(?:ый|ое|ая|о|ые|ых))` +
+			`|([гГ]ей)` +
+			`|([гГ]лубок(?:ий|ое|ая|о|и|ие|ого)?)` +
+			`|([дД]оллар(?:ов|ы)?)` +
+			`|([фФ]антази[яйи])` +
+			`|([гГ]лот(?:ает|ать|ай|ок))` +
+			`|([мМ]астер(?:а|ы|ов)?)` +
+			`|([пП]одзем(?:ный|ное|ная|ные|ных|ного|елье|елья))` +
+			`|([бБ]ой|[мМ]альчик(?:а|и|ов)?|[пП]арен(?:ь|[её]к))` +
+			`|(?:^|\s)([сС]луг[аиеу])` +
+			`|(о)`,
+		),
 		replacers: map[int][]byte{
-			0: []byte("ASS"),
-			1: []byte("♂"),
-			2: []byte("CUM"),
-			3: []byte("FUCK"),
-			4: []byte("DARK"),
-			// 5: useless suffixes group
-			6: []byte("GAY"),
-			7: []byte("DEEP"),
-			// 8: useless suffixes group
-			9: []byte("BUCKS"),
+			0:  []byte("ASS"),
+			1:  []byte("ANAL"),
+			2:  []byte("CUM"),
+			3:  []byte("FUCK"),
+			4:  []byte("DARK"),
+			5:  []byte("GAY"),
+			6:  []byte("DEEP"),
+			7:  []byte("BUCKS"),
+			8:  []byte("FANTASY"),
+			9:  []byte("SWALL♂W"),
+			10: []byte("MASTER"),
+			11: []byte("DUNGE♂N"),
+			12: []byte("B♂Y"),
+			13: []byte("SLAVE"),
+			14: []byte("♂"),
 		},
 	}
 	EnglishConfig = langConfig{

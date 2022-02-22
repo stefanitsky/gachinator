@@ -74,12 +74,196 @@ func TestGachinateRu(t *testing.T) {
 			expectedOutput: "DEEP кр♂личья н♂ра",
 		},
 		{
+			input:          "доллар",
+			expectedOutput: "BUCKS",
+		},
+		{
 			input:          "доллары",
 			expectedOutput: "BUCKS",
 		},
 		{
 			input:          "долларов",
 			expectedOutput: "BUCKS",
+		},
+		{
+			input:          "фантазия",
+			expectedOutput: "FANTASY",
+		},
+		{
+			input:          "фантазии",
+			expectedOutput: "FANTASY",
+		},
+		{
+			input:          "Фантазий ",
+			expectedOutput: "FANTASY ",
+		},
+		{
+			input:          "глотает",
+			expectedOutput: "SWALL♂W",
+		},
+		{
+			input:          "глотать",
+			expectedOutput: "SWALL♂W",
+		},
+		{
+			input:          "глотай",
+			expectedOutput: "SWALL♂W",
+		},
+		{
+			input:          "глоток",
+			expectedOutput: "SWALL♂W",
+		},
+		{
+			input:          "мастер",
+			expectedOutput: "MASTER",
+		},
+		{
+			input:          "мастера",
+			expectedOutput: "MASTER",
+		},
+		{
+			input:          "мастеры",
+			expectedOutput: "MASTER",
+		},
+		{
+			input:          "мастеров",
+			expectedOutput: "MASTER",
+		},
+		{
+			input:          "пр♂фессионал",
+			expectedOutput: "пр♂фессиANAL",
+		},
+		{
+			input:          "пр♂фессионала",
+			expectedOutput: "пр♂фессиANALа",
+		},
+		{
+			input:          "пр♂фессионалов",
+			expectedOutput: "пр♂фессиANAL♂в",
+		},
+		{
+			input:          "пр♂фессионалы",
+			expectedOutput: "пр♂фессиANALы",
+		},
+		{
+			input:          "национальный",
+			expectedOutput: "нациANALьный",
+		},
+		{
+			input:          "национальная",
+			expectedOutput: "нациANALьная",
+		},
+		{
+			input:          "национальное",
+			expectedOutput: "нациANALьн♂е",
+		},
+		{
+			input:          "национальных",
+			expectedOutput: "нациANALьных",
+		},
+		{
+			input:          "национального",
+			expectedOutput: "нациANALьн♂г♂",
+		},
+		{
+			input:          "подземный",
+			expectedOutput: "DUNGE♂N",
+		},
+		{
+			input:          "Подземное",
+			expectedOutput: "DUNGE♂N",
+		},
+		{
+			input:          "подземная",
+			expectedOutput: "DUNGE♂N",
+		},
+		{
+			input:          "подземные",
+			expectedOutput: "DUNGE♂N",
+		},
+		{
+			input:          "подземного",
+			expectedOutput: "DUNGE♂N",
+		},
+		{
+			input:          "подземных",
+			expectedOutput: "DUNGE♂N",
+		},
+		{
+			input:          "подземелье",
+			expectedOutput: "DUNGE♂N",
+		},
+		{
+			input:          "подземелья",
+			expectedOutput: "DUNGE♂N",
+		},
+		{
+			input:          "голубой",
+			expectedOutput: "г♂луB♂Y",
+		},
+		{
+			input:          "голубых",
+			expectedOutput: "г♂лубых",
+		},
+		{
+			input:          "мальчик",
+			expectedOutput: "B♂Y",
+		},
+		{
+			input:          "мальчика",
+			expectedOutput: "B♂Y",
+		},
+		{
+			input:          "мальчики",
+			expectedOutput: "B♂Y",
+		},
+		{
+			input:          "мальчиков",
+			expectedOutput: "B♂Y",
+		},
+		{
+			input:          "Бойлер",
+			expectedOutput: "B♂Yлер",
+		},
+		{
+			input:          "парень",
+			expectedOutput: "B♂Y",
+		},
+		{
+			input:          "Паренек",
+			expectedOutput: "B♂Y",
+		},
+		{
+			input:          "паренёк",
+			expectedOutput: "B♂Y",
+		},
+		{
+			input:          "отбойник",
+			expectedOutput: "♂тB♂Yник",
+		},
+		{
+			input:          "слуга",
+			expectedOutput: "SLAVE",
+		},
+		{
+			input:          "слуги",
+			expectedOutput: "SLAVE",
+		},
+		{
+			input:          "Слуге не хватило места",
+			expectedOutput: "SLAVE не хватил♂ места",
+		},
+		{
+			input:          "поддержать слугу народа",
+			expectedOutput: "п♂ддержать SLAVE нар♂да",
+		},
+		{
+			input:          "обычная услуга",
+			expectedOutput: "♂бычная услуга",
+		},
+		{
+			input:          "колодец достаточно глубок",
+			expectedOutput: "к♂л♂дец д♂стат♂чн♂ DEEP",
 		},
 	}
 
