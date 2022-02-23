@@ -2,6 +2,7 @@
 
 ![workflow](https://github.com/stefanitsky/gachinator/actions/workflows/test.yml/badge.svg)
 [![Go Report Card](https://goreportcard.com/badge/github.com/stefanitsky/gachinator)](https://goreportcard.com/report/github.com/stefanitsky/gachinator)
+[![codecov](https://codecov.io/gh/stefanitsky/gachinator/branch/master/graph/badge.svg)](https://codecov.io/gh/stefanitsky/gachinator)
 
 Package gachinator provides utils to gachinate input text.
 
