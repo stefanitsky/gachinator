@@ -6,19 +6,44 @@ import (
 	"regexp"
 )
 
-type match struct {
-	start    int
-	end      int
-	replacer []byte
-	found    bool
-}
+type replacer []byte
+type reGroupIndex int
+type replacers map[reGroupIndex]replacer
 
 // LangConfig contains *regexp.Regexp to find text to replace
 // and replacers map to find a replace.
 type LangConfig struct {
-	re        *regexp.Regexp
-	replacers map[int][]byte
+	re                 *regexp.Regexp
+	replacers          replacers
+	submatchIndexesLen int
 }
+
+var (
+	russianReplacers = replacers{
+		0:  replacer("ASS"),
+		1:  replacer("ANAL"),
+		2:  replacer("CUM"),
+		3:  replacer("FUCK"),
+		4:  replacer("DARK"),
+		5:  replacer("GAY"),
+		6:  replacer("DEEP"),
+		7:  replacer("BUCKS"),
+		8:  replacer("FANTASY"),
+		9:  replacer("SWALL♂W"),
+		10: replacer("MASTER"),
+		11: replacer("DUNGE♂N"),
+		12: replacer("B♂Y"),
+		13: replacer("SLAVE"),
+		14: replacer("♂"),
+	}
+	englishReplacers = replacers{
+		0: replacer("ASS"),
+		1: replacer("♂"),
+		2: replacer("CUM"),
+		3: replacer("FUCK"),
+		4: replacer("DARK"),
+	}
+)
 
 var (
 	// RussianConfig is a config to work with a russian text
@@ -40,35 +65,14 @@ var (
 			`|(?:^|\s)([сС]луг[аиеу])` +
 			`|(о)`,
 		),
-		replacers: map[int][]byte{
-			0:  []byte("ASS"),
-			1:  []byte("ANAL"),
-			2:  []byte("CUM"),
-			3:  []byte("FUCK"),
-			4:  []byte("DARK"),
-			5:  []byte("GAY"),
-			6:  []byte("DEEP"),
-			7:  []byte("BUCKS"),
-			8:  []byte("FANTASY"),
-			9:  []byte("SWALL♂W"),
-			10: []byte("MASTER"),
-			11: []byte("DUNGE♂N"),
-			12: []byte("B♂Y"),
-			13: []byte("SLAVE"),
-			14: []byte("♂"),
-		},
+		replacers:          russianReplacers,
+		submatchIndexesLen: russianReplacers.getSubmatchIndexesLen(),
 	}
 	// EnglishConfig is a config to work with an english text
 	EnglishConfig = LangConfig{
-		re: regexp.MustCompile(`([eE]ss)|(o)|([cC][ou]m(e))|([fF]ac)|([dD]ark)`),
-		replacers: map[int][]byte{
-			0: []byte("ASS"),
-			1: []byte("♂"),
-			2: []byte("CUM"),
-			// 3: useless suffix group
-			4: []byte("FUCK"),
-			5: []byte("DARK"),
-		},
+		re:                 regexp.MustCompile(`([eE]ss)|(o)|([cC][ou]m(?:e))|([fF]ac)|([dD]ark)`),
+		replacers:          englishReplacers,
+		submatchIndexesLen: englishReplacers.getSubmatchIndexesLen(),
 	}
 	langCodeToLangConfig = map[string]LangConfig{
 		"ru": RussianConfig,
@@ -86,17 +90,15 @@ func (e *LangConfigNotFoundError) Error() string {
 }
 
 var (
-	offset int
-	m      match
-	orig   []byte
+	insertOffset  int
+	originalBytes []byte
 )
 
 var (
-	subIndex int
-	start    int
-	end      int
-	repl     []byte
-	found    bool
+	currentReGroupIndex reGroupIndex
+	startIndex          int
+	endIndex            int
+	repl                replacer
 )
 
 // Gachinate translates your input text with specified language config and returns gachinated variant.
@@ -130,37 +132,38 @@ func FindLangConfig(lang string) (*LangConfig, error) {
 func gachinate(b *[]byte, lc LangConfig) *[]byte {
 	allSubmatchIndexes := lc.re.FindAllSubmatchIndex(*b, -1)
 
-	offset = 0
+	insertOffset = 0
 	for _, loc := range allSubmatchIndexes {
-		m = findMatch(&loc, b, &lc)
-		if m.found {
-			orig = (*b)[m.start:m.end]
-			*b = append((*b)[:m.start+offset], append(m.replacer, (*b)[m.end+offset:]...)...)
-			offset += len(m.replacer) - len(orig)
+		currentReGroupIndex = 0
+
+		// We don't need first 2 values, just skip them
+		for i := 2; i < lc.submatchIndexesLen; i += 2 {
+			startIndex, endIndex = loc[i], loc[i+1]
+			// Each loc contains all submatch indexes, even match is not found,
+			// that's why we need to check, that match indexes not equal -1
+			if startIndex != -1 && endIndex != -1 {
+				// We don't need to check, that replacer exist,
+				// because if not, it's not yet finished language config
+				// and panic will be raised
+				repl = lc.replacers[currentReGroupIndex]
+				originalBytes = (*b)[startIndex:endIndex]
+				*b = append((*b)[:startIndex+insertOffset], append(repl, (*b)[endIndex+insertOffset:]...)...)
+				insertOffset += len(repl) - len(originalBytes)
+				// Each loc contains only 1 found submatch indexes,
+				// we don't need to iterate next, so we skip them
+				continue
+			}
+			currentReGroupIndex++
 		}
 	}
 
 	return b
 }
 
-// Finds match by found regex submatch indexes and returns match struct.
-func findMatch(indexes *[]int, b *[]byte, lc *LangConfig) (m match) {
-	subIndex = 0
-
-	for i := 2; i < len(*indexes); i += 2 {
-		start, end = (*indexes)[i], (*indexes)[i+1]
-		if start != -1 && end != -1 {
-			repl, found = lc.replacers[subIndex]
-			if found {
-				m.start = start
-				m.end = end
-				m.replacer = repl
-				m.found = found
-				break
-			}
-		}
-		subIndex++
-	}
-
-	return m
+// getSubmatchIndexesLen returns total submatch indexes length
+// It means (length of replacers + 1) * 2, where 2 it's a multiplier,
+// which says, that we will get 2 indexes on each group
+// from the regexp.FindAllSubmatchIndex
+func (r *replacers) getSubmatchIndexesLen() int {
+	return (len(*r) + 1) * 2
 }
